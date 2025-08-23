@@ -13,17 +13,17 @@ import (
 
 const (
 	header = `<!DOCTYPE html>
-	<html>
-	<head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<title>Markdown Preview Tool</title>
-	</head>
-	<body>
-	`
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Markdown Preview Tool</title>
+  </head>
+  <body>
+`
 	footer = `
-	</body>
-	</html>
-	`
+  </body>
+</html>
+`
 )
 
 func main() {
@@ -31,11 +31,12 @@ func main() {
 	filename := flag.String("file", "", "Markdown file to preview")
 	flag.Parse()
 
-	// If user did not privide input file, show usage
+	// If user did not provide input file, show usage
 	if *filename == "" {
 		flag.Usage()
 		os.Exit(1)
 	}
+
 	if err := run(*filename); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
@@ -43,26 +44,29 @@ func main() {
 }
 
 func run(filename string) error {
-	// Read all data from the input file and check for errors
+	// Read all the data from the input file and check for errors
 	input, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
 
 	htmlData := parseContent(input)
+
 	outName := fmt.Sprintf("%s.html", filepath.Base(filename))
 	fmt.Println(outName)
+
 	return saveHTML(outName, htmlData)
 }
 
 func parseContent(input []byte) []byte {
-	// Parse the markdown file through balckfriday and bluemonday
-	// to generate a valid and save HTML
+	// Parse the markdown file through blackfriday and bluemonday
+	// to generate a valid and safe HTML
 	output := blackfriday.Run(input)
 	body := bluemonday.UGCPolicy().SanitizeBytes(output)
 
 	// Create a buffer of bytes to write to file
 	var buffer bytes.Buffer
+
 	// Write html to bytes buffer
 	buffer.WriteString(header)
 	buffer.Write(body)
@@ -71,7 +75,7 @@ func parseContent(input []byte) []byte {
 	return buffer.Bytes()
 }
 
-func saveHTML(outName string, data []byte) error {
+func saveHTML(outFname string, data []byte) error {
 	// Write the bytes to the file
-	return os.WriteFile(outName, data, 0644)
+	return os.WriteFile(outFname, data, 0644)
 }
