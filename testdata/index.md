@@ -1,6 +1,6 @@
 # Tolkien Fan Club
 
-![JRR Tolkien sitting](/c/Users/TXC-CARTAGO/Documents/DAVINSON ORTIZ/archivos_personales/code/practice_code/powerful_cli's_in_go/mdp/testdata/images/tolkien.png)
+![JRR Tolkien sitting](/home/davinson/Documentos/code/workspace/github.com/davinson-ortiz/powerful_cli_in_go/mdp/testdata/images/tolkien.png)
 
 Here's the deal, **I like Tolkien**.
 
